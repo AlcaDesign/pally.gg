@@ -2,13 +2,16 @@
   "name": "pally.gg",
   "version": "0.1.0",
   "description": "Connect to the Pally.gg API (WebSockets)",
-  "main": "dist/index.js",
+  "main": "dist/pally.node.mjs",
+  "browser": "dist/pally.mjs",
   "types": "dist/index.d.ts",
   "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    }
+    "types": "./dist/index.d.ts",
+    "node": {
+      "import": "./dist/pally.node.mjs",
+      "require": "./dist/pally.node.cjs"
+    },
+    "default": "./dist/pally.mjs"
   },
   "files": [
     "dist"
