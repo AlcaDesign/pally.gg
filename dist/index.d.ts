@@ -91,7 +91,7 @@ type Events = {
     'campaigntip.notify': (campaignTip: CampaignTip, page: Page) => void;
 };
 type ChannelType = 'firehose' | 'activity-feed';
-interface KeepaliveOpts {
+interface KeepaliveOptions {
     /**
      * The interval in seconds at which to send a ping to the server.
      */
@@ -101,7 +101,7 @@ interface KeepaliveOpts {
      */
     pingTimeoutSeconds?: number;
 }
-export interface Opts {
+export interface ClientOptions {
     /**
      * Your API key. Required.
      *
@@ -122,7 +122,7 @@ export interface Opts {
     /**
      * Options for keepalive.
      */
-    keepalive?: KeepaliveOpts;
+    keepalive?: KeepaliveOptions;
 }
 interface Keepalive {
     /**
@@ -160,7 +160,7 @@ declare class Client extends EventEmitter<Events> {
     auth: string;
     readonly keepalive: Keepalive;
     private wasCloseCalled;
-    constructor(opts: Opts);
+    constructor(opts: ClientOptions);
     /**
      * Connect to the server.
      */

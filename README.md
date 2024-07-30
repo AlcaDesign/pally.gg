@@ -7,8 +7,18 @@ Unofficial package for [Pally.gg](pally-gg). | [Pally.gg's Developer Documentati
 > :warning: The WebSockets feed is currently in Beta and subject to change.
 
 # Install
-```sh
+
+## Node or Browser
+
+```bash
 npm install pally.gg
+```
+
+## Browser
+
+Available as `Pally` on the global object.
+```
+<script src="https://unpkg.com/pally.gg"></script>
 ```
 
 # Usage
@@ -23,9 +33,7 @@ Get your [API key][api-key].
 
 ```js
 import Pally from 'pally.gg';
-const client = new Pally.Client({
-	auth: 'YOUR_API_KEY'
-});
+const client = new Pally.Client({ auth: 'YOUR_API_KEY' });
 
 client.connect();
 
@@ -37,7 +45,7 @@ client.on('campaigntip.notify', (campaignTip, page) => {
 	const { grossAmountInCents, displayName, message } = campaignTip;
 	const amount = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
 		.format(grossAmountInCents / 100);
-	console.log(`New tip $${amount} from ${displayName}: ${message}`);
+	console.log(`New tip! ${amount} from ${displayName}: ${message}`);
 });
 ```
 
@@ -48,6 +56,8 @@ client.on('campaigntip.notify', (campaignTip, page) => {
 Enables connecting to the Pally.gg WebSockets feed.
 
 The `Client` extends a basic, typed `EventEmitter`.
+
+### Constructor `new Client(options: ClientOptions)`
 
 ### Properties
 
@@ -117,6 +127,36 @@ Emitted when a new tip has been received. The `campaignTip` includes details abo
 details about the page the tip was received on.
 
 ## Types
+
+### interface ClientOptions
+
+#### `auth`: `string`
+
+Your API key. Required.
+
+#### `channel`?: `'firehose' | 'activity-feed'`
+
+The channel to connect to.
+- `'firehose'` - The firehose feed sends all tips for all pages you own. Default.
+- `'activity-feed'` - The activity feed sends all tips for a specific page you own or have access to.
+
+#### `room`?: `string`
+
+The specific activity feed "slug" to listen to. This is only required if the channel is set to `'activity-feed', otherwise it is ignored.
+
+#### `keepalive`?: `KeepaliveOptions`
+
+Options for keepalive.
+
+### interface KeepaliveOptions
+
+#### `intervalSeconds`?: `number`
+
+The interval in seconds at which to send a ping to the server.
+
+#### `pingTimeoutSeconds`?: `number`
+
+The number of seconds to wait for a pong response before closing the connection and reconnecting.
 
 ### interface CampaignTip
 

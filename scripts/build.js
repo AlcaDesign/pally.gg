@@ -11,25 +11,31 @@ const opts = {
 	sourcesContent: false,
 };
 
+/** @type {import('esbuild').BuildOptions} */
 const node = {
 	entryPoints: { 'pally.node': entryFile },
 	platform: 'node',
 };
+/** @type {import('esbuild').BuildOptions} */
 const browser = {
 	platform: 'browser',
 	minify: true,
 };
+/** @type {import('esbuild').BuildOptions} */
 const esm = {
 	outExtension: { '.js': '.mjs' },
 	format: 'esm',
 };
+/** @type {import('esbuild').BuildOptions} */
 const cjs = {
 	outExtension: { '.js': '.cjs' },
 	format: 'cjs',
 };
+/** @type {import('esbuild').BuildOptions} */
 const iife = {
 	outExtension: { '.js': '.js' },
 	format: 'iife',
+	globalName: 'Pally',
 };
 
 // Node ESM

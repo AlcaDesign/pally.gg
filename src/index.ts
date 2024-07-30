@@ -104,7 +104,7 @@ type Events = {
 
 type ChannelType = 'firehose' | 'activity-feed';
 
-interface KeepaliveOpts {
+interface KeepaliveOptions {
 	/**
 	 * The interval in seconds at which to send a ping to the server.
 	 */
@@ -115,7 +115,7 @@ interface KeepaliveOpts {
 	pingTimeoutSeconds?: number;
 }
 
-export interface Opts {
+export interface ClientOptions {
 	/**
 	 * Your API key. Required.
 	 *
@@ -136,7 +136,7 @@ export interface Opts {
 	/**
 	 * Options for keepalive.
 	 */
-	keepalive?: KeepaliveOpts;
+	keepalive?: KeepaliveOptions;
 }
 
 interface Keepalive {
@@ -176,7 +176,7 @@ class Client extends EventEmitter<Events> {
 	auth: string;
 	readonly keepalive: Keepalive;
 	private wasCloseCalled: boolean = false;
-	constructor(opts: Opts) {
+	constructor(opts: ClientOptions) {
 		super();
 		this.keepalive = {
 			lastPingAt: undefined,
