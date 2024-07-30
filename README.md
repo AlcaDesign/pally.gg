@@ -18,7 +18,12 @@ npm install pally.gg
 
 Available as `Pally` on the global object.
 ```
-<script src="https://unpkg.com/pally.gg"></script>
+<script src="https://unpkg.com/pally.gg/dist/pally.js"></script>
+```
+or
+```js
+import Pally from 'https://unpkg.com/pally.gg';
+const client = new Pally.Client({ auth: 'YOUR_API_KEY' });
 ```
 
 # Usage

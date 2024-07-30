@@ -5,7 +5,10 @@
   "main": "dist/pally.node.mjs",
   "browser": "dist/pally.mjs",
   "types": "dist/index.d.ts",
-  "repository": "github:AlcaDesign/pally.gg",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlcaDesign/pally.gg.git"
+  },
   "homepage": "https://pally.gg",
   "exports": {
     ".": {
