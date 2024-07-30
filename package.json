@@ -5,6 +5,8 @@
   "main": "dist/pally.node.mjs",
   "browser": "dist/pally.mjs",
   "types": "dist/index.d.ts",
+  "repository": "github:AlcaDesign/pally.gg",
+  "homepage": "https://pally.gg",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
