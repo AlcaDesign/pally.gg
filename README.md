@@ -2,7 +2,7 @@
 
 Access a direct feed of your tips with WebSockets.
 
-Unofficial package for [Pally.gg](pally-gg). | [Pally.gg's Developer Documentation](dev-docs)
+Unofficial package for [Pally.gg][pally-gg]. | [Pally.gg's Developer Documentation][dev-docs]
 
 > :warning: The WebSockets feed is currently in Beta and subject to change.
 
