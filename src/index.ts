@@ -53,7 +53,7 @@ namespace Payloads {
  *
  * @see https://docs.pally.gg/developers/websockets#campaigntip-notify
  */
-interface CampaignTip {
+export interface CampaignTip {
 	/**
 	 * The unique identifier for the tip.
 	 */
@@ -91,7 +91,7 @@ interface CampaignTip {
 /**
  * @see https://docs.pally.gg/developers/websockets#campaigntip-notify
  */
-type Page = Payloads.CampaignTipNotify.Page;
+export type Page = Payloads.CampaignTipNotify.Page;
 
 type Events = {
 	connect: () => void;
