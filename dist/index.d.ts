@@ -141,7 +141,7 @@ interface Keepalive {
 /**
  * @see https://docs.pally.gg/developers/websockets
  */
-declare class Client extends EventEmitter<Events> {
+export declare class Client extends EventEmitter<Events> {
     /**
      * The WebSocket connection.
      */

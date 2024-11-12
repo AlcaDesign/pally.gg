@@ -1,6 +1,6 @@
 {
   "name": "pally.gg",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Connect to the Pally.gg API (WebSockets)",
   "main": "dist/pally.node.mjs",
   "browser": "dist/pally.mjs",

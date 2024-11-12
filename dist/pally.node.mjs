@@ -181,6 +181,7 @@ var src_default = {
   Client
 };
 export {
+  Client,
   src_default as default
 };
 //# sourceMappingURL=pally.node.mjs.map
