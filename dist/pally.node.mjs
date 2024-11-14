@@ -77,6 +77,7 @@ var Client = class extends EventEmitter {
   }
   handleClose(e) {
     this.stopKeepaliveInterval();
+    this.stopPingTimeout();
     this.keepalive.lastPingAt = void 0;
     this.keepalive.latencyMs = void 0;
     this.socket = void 0;
@@ -99,7 +100,7 @@ var Client = class extends EventEmitter {
     const now = Date.now();
     const dataString = e.data.toString();
     if (dataString === "pong") {
-      clearTimeout(this.keepalive.pingTimeout);
+      this.stopPingTimeout();
       this.keepalive.latencyMs = now - this.keepalive.lastPingAt;
       this.emit("pong", this.keepalive.latencyMs);
       return;
@@ -125,15 +126,22 @@ var Client = class extends EventEmitter {
   ping() {
     if (!this.socket || this.socket.readyState !== WebSocket.OPEN) {
       throw new Error("Socket not connected");
+    } else if (this.keepalive.pingTimeout) {
+      return;
     }
     this.socket.send("ping");
     this.keepalive.lastPingAt = Date.now();
     this.keepalive.pingTimeout = setTimeout(() => {
+      this.stopPingTimeout();
       if (!this.socket) {
         return;
       }
       this.socket.close();
     }, this.keepalive.pingTimeoutSeconds * 1e3);
+  }
+  stopPingTimeout() {
+    clearTimeout(this.keepalive.pingTimeout);
+    this.keepalive.pingTimeout = void 0;
   }
   setKeepaliveInterval() {
     if (this.keepalive.interval) {
@@ -144,7 +152,7 @@ var Client = class extends EventEmitter {
   }
   stopKeepaliveInterval() {
     clearInterval(this.keepalive.interval);
-    clearTimeout(this.keepalive.pingTimeout);
+    this.keepalive.interval = void 0;
   }
   send(data) {
     this.socket?.send(JSON.stringify(data));

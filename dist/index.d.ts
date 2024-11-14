@@ -176,6 +176,7 @@ export declare class Client extends EventEmitter<Events> {
     private handleError;
     private handleMessage;
     private ping;
+    private stopPingTimeout;
     private setKeepaliveInterval;
     private stopKeepaliveInterval;
     private send;
