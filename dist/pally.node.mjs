@@ -30,7 +30,9 @@ var Client = class extends EventEmitter {
       interval: void 0,
       intervalSeconds: opts.keepalive?.intervalSeconds ?? 60,
       pingTimeout: void 0,
-      pingTimeoutSeconds: opts.keepalive?.pingTimeoutSeconds ?? 10
+      pingTimeoutSeconds: opts.keepalive?.pingTimeoutSeconds ?? 10,
+      reconnectTimeout: void 0,
+      reconnectAttempts: 0
     };
     this.channel = opts.channel ?? "firehose";
     this.room = this.channel === "activity-feed" ? opts.room : void 0;
@@ -68,6 +70,7 @@ var Client = class extends EventEmitter {
     this.socket?.close();
   }
   handleOpen(e) {
+    this.keepalive.reconnectAttempts = 0;
     this.ping();
     this.setKeepaliveInterval();
     this.emit("connect");
@@ -81,8 +84,10 @@ var Client = class extends EventEmitter {
     if (this.wasCloseCalled) {
       return;
     }
-    const ms = 1e3;
-    setTimeout(() => {
+    clearTimeout(this.keepalive.reconnectTimeout);
+    const ms = Math.min(++this.keepalive.reconnectAttempts ** 0.4 * 100, 1e4);
+    this.keepalive.reconnectTimeout = setTimeout(() => {
+      this.keepalive.reconnectTimeout = void 0;
       this.emit("reconnecting");
       this.connect();
     }, ms);

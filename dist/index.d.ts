@@ -137,6 +137,8 @@ interface Keepalive {
     intervalSeconds: number;
     pingTimeout?: ReturnType<typeof setTimeout>;
     pingTimeoutSeconds: number;
+    reconnectTimeout?: ReturnType<typeof setTimeout>;
+    reconnectAttempts: number;
 }
 /**
  * @see https://docs.pally.gg/developers/websockets
