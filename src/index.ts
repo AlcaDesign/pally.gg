@@ -152,6 +152,8 @@ interface Keepalive {
 	intervalSeconds: number;
 	pingTimeout?: ReturnType<typeof setTimeout>;
 	pingTimeoutSeconds: number;
+	reconnectTimeout?: ReturnType<typeof setTimeout>;
+	reconnectAttempts: number;
 }
 
 /**
@@ -185,6 +187,8 @@ export class Client extends EventEmitter<Events> {
 			intervalSeconds: opts.keepalive?.intervalSeconds ?? 60,
 			pingTimeout: undefined,
 			pingTimeoutSeconds: opts.keepalive?.pingTimeoutSeconds ?? 10,
+			reconnectTimeout: undefined,
+			reconnectAttempts: 0,
 		};
 		this.channel = opts.channel ?? 'firehose';
 		this.room = this.channel === 'activity-feed' ? opts.room : undefined;
@@ -222,6 +226,7 @@ export class Client extends EventEmitter<Events> {
 		this.socket?.close();
 	}
 	private handleOpen(e: Event) {
+		this.keepalive.reconnectAttempts = 0;
 		this.ping();
 		this.setKeepaliveInterval();
 		this.emit('connect');
@@ -235,9 +240,10 @@ export class Client extends EventEmitter<Events> {
 		if(this.wasCloseCalled) {
 			return;
 		}
-		// TODO: Implement exponential backoff
-		const ms = 1000;
-		setTimeout(() => {
+		clearTimeout(this.keepalive.reconnectTimeout);
+		const ms = Math.min(++this.keepalive.reconnectAttempts ** 0.4 * 100, 10000);
+		this.keepalive.reconnectTimeout = setTimeout(() => {
+			this.keepalive.reconnectTimeout = undefined;
 			this.emit('reconnecting');
 			this.connect();
 		}, ms);
