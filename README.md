@@ -6,6 +6,9 @@ Unofficial package for [Pally.gg][pally-gg]. | [Pally.gg's Developer Documentati
 
 > :warning: The WebSockets feed is currently in Beta and subject to change.
 
+> :warning: Pally.gg appears to be coasting towards a shutdown. Many features, including simply logging in, are broken.
+> This package may not work as expected. If you are a Pally.gg user, consider finding an alternative.
+
 # Install
 
 ## Node or Browser
@@ -109,7 +112,7 @@ Used with `client.on(eventName, (/* ... */) => void)` to listen for events.
 
 Emitted when the client has successfully connected to the WebSockets feed.
 
-#### `on('close', (event: CloseError) => void)`
+#### `on('close', (event: CloseEvent) => void)`
 
 Emitted when the connection has been closed.
 
@@ -117,7 +120,7 @@ Emitted when the connection has been closed.
 
 Emitted when the client is about to attempt to reconnect.
 
-#### `on('error', (event: Error) => void)`
+#### `on('error', (event: Event) => void)`
 
 Emitted when a socket error occurred.
 
