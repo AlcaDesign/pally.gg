@@ -6,9 +6,6 @@ Unofficial package for [Pally.gg][pally-gg]. | [Pally.gg's Developer Documentati
 
 > :warning: The WebSockets feed is currently in Beta and subject to change.
 
-> :warning: Pally.gg appears to be coasting towards a shutdown. Many features, including simply logging in, are broken.
-> This package may not work as expected. If you are a Pally.gg user, consider finding an alternative.
-
 # Install
 
 ## Node or Browser
